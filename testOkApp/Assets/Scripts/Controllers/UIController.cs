@@ -13,12 +13,19 @@ namespace OAT
 		}
 
 		public Text m_livesLabel; 
+		public Text m_timeLabel;
 
 		void Awake()
 		{
 			m_instance = this;
 		}
-		public void UpdateLabel(int lives)
+
+		public void UpdateTime(int time)
+		{
+			m_timeLabel.text = "Time: " + time.ToString();
+		}
+
+		public void UpdateLives(int lives)
 		{
 			m_livesLabel.text = "Lives: " + lives.ToString();
 		}

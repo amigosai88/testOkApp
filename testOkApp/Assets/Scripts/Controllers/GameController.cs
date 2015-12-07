@@ -19,6 +19,11 @@ namespace OAT
 			m_instance = this;
 		}
 
+		void Start()
+		{
+			levelController.StartNewLevel();
+		}
+
 		public void RestartLevel()
 		{
 			levelController.StartNewLevel();

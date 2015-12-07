@@ -12,6 +12,8 @@ namespace OAT
 			get { return m_instance; }
 		}
 
+		public UnitModel unitModelPrefab;
+
 		void Awake()
 		{
 			m_instance = this;
@@ -19,7 +21,9 @@ namespace OAT
 
 		public void GenerateUnit(UnitInfo info)
 		{
-
+			UnitModel unit = Instantiate<UnitModel>(unitModelPrefab);
+			unit.transform.position = Vector3.zero;
+			unit.gameObject.AddComponent<BaseUnitMove>().Init(info);
 		}
 	}
 }

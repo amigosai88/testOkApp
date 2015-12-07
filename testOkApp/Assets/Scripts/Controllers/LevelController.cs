@@ -9,18 +9,20 @@ namespace OAT
 	{
 		float m_timeToEnd;
 		float m_timeToGeneration;
+		float m_cachedGenerationTime;
 		int m_lives;
 		int m_scores;
 
-		bool m_sessionFinished;
+		bool m_sessionStarted;
 
 		void ResetLevel()
 		{
 			m_timeToEnd = GameConfig.LEVEL_TIME_SECONDS;
 			m_lives = GameConfig.PLAYER_LIVES;
-			m_timeToGeneration = GameConfig.GENERATION_RATE;
+			m_cachedGenerationTime = GameConfig.GENERATION_RATE;
+			m_timeToGeneration = m_cachedGenerationTime;
 			m_scores = 0;
-			m_sessionFinished = false;
+			m_sessionStarted = true;
 		}
 
 		public void StartNewLevel()
@@ -30,16 +32,17 @@ namespace OAT
 
 		void EndLevel()
 		{
+			m_sessionStarted = false;
 			GameController.Instance.FinishLevel(m_lives > 0);
 		}
 
 		void Update()
 		{
-			if(m_sessionFinished)
+			if(!m_sessionStarted)
 				return;
 
 			TryGenerateUnity();
-
+			UIController.Instance.UpdateTime((int)m_timeToEnd);
 			m_timeToEnd -= Time.deltaTime;
 			if(m_timeToEnd <= 0f)
 				EndLevel();
@@ -50,8 +53,9 @@ namespace OAT
 			m_timeToGeneration -= Time.deltaTime;
 			if(m_timeToGeneration <= 0f)
 			{
+				m_timeToGeneration = m_cachedGenerationTime;
 				UnitType type = GetTypeByChance();
-				UnitInfo info = new UnitInfo(type, GameConfig.UNIT_SPEED[(int)type]);
+				UnitInfo info = new UnitInfo(type);
 				UnitFactory.Instance.GenerateUnit(info);
 			}
 		}
@@ -67,7 +71,7 @@ namespace OAT
 			{
 				result = (UnitType)i;
 				summChance += chances[i];
-				if(summChance > rnd)
+				if(summChance >= rnd)
 					break;
 			}
 
@@ -77,6 +81,7 @@ namespace OAT
 		public void DemagePlayer()
 		{
 			--m_lives;
+			UIController.Instance.UpdateLives(m_lives);
 			if(m_lives < 1)
 				EndLevel();
 		}

@@ -4,19 +4,23 @@ using System.Collections;
 
 namespace OAT
 {
+	public class BaseUnitMove : MonoBehaviour 
+	{
+		protected float m_speed;
+		bool inited;
 
-public class BaseUnitMove : MonoBehaviour {
+		public virtual void Init(UnitInfo info)
+		{
+			m_speed = info.m_speed;
+			inited = true;
+		}
 
-	// Use this for initialization
-	void Start () {
-	
+		void Update () 
+		{
+			if(!inited)
+				return;
+
+			transform.Translate(transform.forward * -m_speed);
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-}
-
-	
 }

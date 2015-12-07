@@ -16,10 +16,10 @@ namespace OAT
 		public UnitType m_unitType;
 		public float m_speed;
 
-		public UnitInfo(UnitType type, float speed)
+		public UnitInfo(UnitType type)
 		{
 			m_unitType = type;
-			m_speed = speed;
+			m_speed = GameConfig.UNIT_SPEED[(int)type];
 		}
 	}
 }

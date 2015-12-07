@@ -4,17 +4,20 @@ using System.Collections;
 
 namespace OAT
 {
+	public enum UnitState
+	{
+		Run = 0,
+		Dead
+	}
 
-	public class UnitGraphics : MonoBehaviour {
+	public class UnitView : MonoBehaviour 
+	{
+		public UnitModel unitModel;
 
-		// Use this for initialization
-		void Start () {
-		
-		}
-		
-		// Update is called once per frame
-		void Update () {
-		
+		// temp
+		public void KillUnit()
+		{
+			transform.Rotate(20f, 30f, 40f);
 		}
 	}
 }
