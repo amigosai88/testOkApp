@@ -10,25 +10,30 @@ namespace OAT
 		public UnitView unitView;
 		public UnitController unitController;
 		public BaseUnitMove unitMove;
+		public UnitInfo unitInfo;
 
 		public void KillUnit()
 		{
-			unitMove.StopMoving();
 			unitView.KillUnit();
-			StartCoroutine(DestroyAfterDelay(0.5f));
+			StartCoroutine(PushAfterDelay(0.5f));
 		}
 
-		IEnumerator DestroyAfterDelay(float delay)
+		IEnumerator PushAfterDelay(float delay)
 		{
+			unitMove.StopMoving();
 			yield return new WaitForSeconds(delay);
 			GameController.Instance.levelController.RemoveUnitFromActive(this);
-			Destroy(this.gameObject);
+
+			UnitFactory.Instance.AddToPool(this);
+			gameObject.SetActive(false);
 		}
 
 		public void UnitStopped()
 		{
-			GameController.Instance.levelController.DemagePlayer();
-			StartCoroutine(DestroyAfterDelay(0.5f));
+			if(unitInfo.m_unitType != UnitType.Alied)
+				GameController.Instance.levelController.DemagePlayer();
+
+			StartCoroutine(PushAfterDelay(0.5f));
 		}
 	}
 }

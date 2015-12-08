@@ -12,6 +12,9 @@ namespace OAT
 		{
 			unitModel.KillUnit();
 			gameObject.SetActive(false);
+
+			if(unitModel.unitInfo.m_unitType == UnitType.Alied)
+				GameController.Instance.FinishLevel(false);
 		}
 	}
 }

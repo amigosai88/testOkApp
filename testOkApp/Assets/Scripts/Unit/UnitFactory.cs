@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
 
 namespace OAT
 {
@@ -13,6 +13,9 @@ namespace OAT
 		}
 
 		public UnitModel unitModelPrefab;
+		List<UnitModel> objectsPool = new List<UnitModel>();
+
+		const float HALF_SCR_WIDTH = 5f;
 
 		void Awake()
 		{
@@ -21,11 +24,61 @@ namespace OAT
 
 		public UnitModel GenerateUnit(UnitInfo info)
 		{
-			UnitModel unit = Instantiate<UnitModel>(unitModelPrefab);
-			unit.transform.position = Vector3.zero;
-			unit.unitMove = unit.gameObject.AddComponent<BaseUnitMove>();
+			UnitModel unit = GetFromPool(info);
+
+			if(unit == null)
+			{
+				unit = Instantiate<UnitModel>(unitModelPrefab);
+				unit.unitInfo = info;
+				unit.unitMove = AddMove(unit, info);
+			}
+			
+			unit.transform.position = GetStartPosition();
+			unit.gameObject.SetActive(true);
 			unit.unitMove.Init(info);
 			return unit;
 		}
+
+		BaseUnitMove AddMove(UnitModel unit, UnitInfo info)
+		{
+			switch (info.m_unitType)
+			{
+				case UnitType.EnemyLinear:
+				     return unit.gameObject.AddComponent<BaseUnitMove>();
+
+				default:
+					 return unit.gameObject.AddComponent<DiagonalMove>();
+			}
+		}
+
+		Vector3 GetStartPosition()
+		{
+			return new Vector3(Random.Range(-HALF_SCR_WIDTH, HALF_SCR_WIDTH), 0f, 0f);
+		}
+
+		public void AddToPool(UnitModel unit)
+		{
+			objectsPool.Add(unit);
+		}
+
+		public UnitModel GetFromPool(UnitInfo info)
+		{
+			UnitModel result = null;
+
+			foreach(UnitModel unit in objectsPool)
+			{
+				if(unit.unitInfo.m_unitType == info.m_unitType)
+				{
+					result = unit;
+					break;
+				}
+			}
+
+			if(result != null)
+				objectsPool.Remove(result);
+
+			return result;
+		}
+
 	}
 }
