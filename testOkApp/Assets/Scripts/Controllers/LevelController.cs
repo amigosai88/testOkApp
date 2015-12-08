@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-
+using System.Collections.Generic;
 
 namespace OAT
 {
@@ -14,6 +13,7 @@ namespace OAT
 		int m_scores;
 
 		bool m_sessionStarted;
+		List<UnitModel> activeUnits = new List<UnitModel>();
 
 		void ResetLevel()
 		{
@@ -23,6 +23,17 @@ namespace OAT
 			m_timeToGeneration = m_cachedGenerationTime;
 			m_scores = 0;
 			m_sessionStarted = true;
+
+			UIController.Instance.UpdateLives(m_lives);
+			ClearActiveUnits();
+		}
+
+		void ClearActiveUnits()
+		{
+			foreach(UnitModel unit in activeUnits)
+				Destroy(unit.gameObject);
+
+			activeUnits.Clear();
 		}
 
 		public void StartNewLevel()
@@ -56,8 +67,14 @@ namespace OAT
 				m_timeToGeneration = m_cachedGenerationTime;
 				UnitType type = GetTypeByChance();
 				UnitInfo info = new UnitInfo(type);
-				UnitFactory.Instance.GenerateUnit(info);
+				UnitModel unit = UnitFactory.Instance.GenerateUnit(info);
+				activeUnits.Add(unit);
 			}
+		}
+
+		public void RemoveUnitFromActive(UnitModel unit)
+		{
+			activeUnits.Remove(unit);
 		}
 
 		UnitType GetTypeByChance()

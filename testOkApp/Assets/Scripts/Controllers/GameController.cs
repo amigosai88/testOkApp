@@ -12,6 +12,7 @@ namespace OAT
 			get {return m_instance;}
 		}
 
+		public static bool IsPaused;
 		public LevelController levelController;
 
 		void Awake()
@@ -26,18 +27,19 @@ namespace OAT
 
 		public void RestartLevel()
 		{
+			GameController.IsPaused = false;
 			levelController.StartNewLevel();
 		}
 
 		public void LoadMainMenu()
 		{
+			GameController.IsPaused = false;
 			Application.LoadLevel("Menu");
 		}
 
 		public void FinishLevel(bool win)
 		{
-			// TEMP
-			Debug.Log((win) ? "WIN" : "LOSE");
+			UIController.Instance.FinishLevel(win);
 		}
 	}
 }

@@ -19,11 +19,13 @@ namespace OAT
 			m_instance = this;
 		}
 
-		public void GenerateUnit(UnitInfo info)
+		public UnitModel GenerateUnit(UnitInfo info)
 		{
 			UnitModel unit = Instantiate<UnitModel>(unitModelPrefab);
 			unit.transform.position = Vector3.zero;
-			unit.gameObject.AddComponent<BaseUnitMove>().Init(info);
+			unit.unitMove = unit.gameObject.AddComponent<BaseUnitMove>();
+			unit.unitMove.Init(info);
+			return unit;
 		}
 	}
 }
