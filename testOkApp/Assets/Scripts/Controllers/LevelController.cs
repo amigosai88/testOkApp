@@ -11,6 +11,7 @@ namespace OAT
 		float m_cachedGenerationTime;
 		int m_lives;
 		int m_scores;
+		int m_bombs;
 
 		bool m_sessionStarted;
 		List<UnitModel> activeUnits = new List<UnitModel>();
@@ -23,6 +24,7 @@ namespace OAT
 			m_timeToGeneration = m_cachedGenerationTime;
 			m_scores = 0;
 			m_sessionStarted = true;
+			m_bombs = GameConfig.BOMBS_COUNT;
 
 			UIController.Instance.UpdateLives(m_lives);
 			ClearActiveUnits();
@@ -101,6 +103,16 @@ namespace OAT
 			UIController.Instance.UpdateLives(m_lives);
 			if(m_lives < 1)
 				EndLevel();
+		}
+
+		public int GetBombsCount()
+		{
+			return m_bombs;
+		}
+
+		public void UseBomb()
+		{
+			--m_bombs;
 		}
 	}
 }

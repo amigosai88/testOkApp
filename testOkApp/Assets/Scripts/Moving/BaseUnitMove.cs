@@ -25,6 +25,11 @@ namespace OAT
 			if(!canMove || GameController.IsPaused)
 				return;
 
+			Moving();
+		}
+
+		protected virtual void Moving()
+		{
 			transform.Translate(transform.forward * -m_speed);
 		}
 	}

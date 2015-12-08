@@ -26,7 +26,12 @@ namespace OAT
 		{
 			UnitModel unit = GetFromPool(info);
 
-			if(unit == null)
+			if(unit != null)
+			{
+				unit.unitState = UnitState.Run;
+				unit.gameObject.SetActive(true);
+			}
+			else
 			{
 				unit = Instantiate<UnitModel>(unitModelPrefab);
 				unit.unitInfo = info;
@@ -34,7 +39,6 @@ namespace OAT
 			}
 			
 			unit.transform.position = GetStartPosition();
-			unit.gameObject.SetActive(true);
 			unit.unitMove.Init(info);
 			return unit;
 		}

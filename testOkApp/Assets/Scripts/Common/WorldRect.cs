@@ -4,17 +4,21 @@ using System.Collections;
 
 namespace OAT
 {
-
-	public class WorldRect : MonoBehaviour {
-
-		// Use this for initialization
-		void Start () {
-		
+	public class WorldRect : MonoBehaviour 
+	{
+		private static WorldRect m_instance = null;
+		public static WorldRect Instance
+		{
+			get { return m_instance; }
 		}
-		
-		// Update is called once per frame
-		void Update () {
-		
+			
+		public Transform plain;
+		public float PLAY_FIELD_WIDTH;
+
+		void Awake()
+		{
+			m_instance = this;
+			PLAY_FIELD_WIDTH = plain.localScale.x;
 		}
 	}
 }

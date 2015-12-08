@@ -4,12 +4,6 @@ using System.Collections;
 
 namespace OAT
 {
-	public enum UnitState
-	{
-		Run = 0,
-		Dead
-	}
-
 	public class UnitView : MonoBehaviour 
 	{
 		public UnitModel unitModel;
