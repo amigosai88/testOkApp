@@ -8,10 +8,15 @@ namespace OAT
 	{
 		public UnitModel unitModel;
 
-		void OnMouseDown()
+		public void RemoveController()
 		{
 			unitModel.KillUnit();
 			gameObject.SetActive(false);
+		}
+
+		void OnMouseDown()
+		{
+			RemoveController();
 
 			if(unitModel.unitInfo.m_unitType == UnitType.Alied)
 				GameController.Instance.FinishLevel(false);

@@ -14,6 +14,8 @@ namespace OAT
 
 		public Text m_livesLabel; 
 		public Text m_timeLabel;
+		public Text m_bombsLabel;
+
 		public GameObject m_summary;
 		public GameObject m_resetBttn;
 		public Text m_summaryLabel;
@@ -34,6 +36,11 @@ namespace OAT
 		public void UpdateLives(int lives)
 		{
 			m_livesLabel.text = "Lives: " + lives.ToString();
+		}
+
+		public void UpdateBombs(int bombs)
+		{
+			m_bombsLabel.text = "Bombs: " + bombs.ToString();
 		}
 
 		public void FinishLevel(bool win)

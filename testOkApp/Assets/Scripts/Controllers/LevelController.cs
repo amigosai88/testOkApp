@@ -15,6 +15,8 @@ namespace OAT
 
 		bool m_sessionStarted;
 		List<UnitModel> activeUnits = new List<UnitModel>();
+		public BombEffect bombEffectPrefab;
+
 
 		void ResetLevel()
 		{
@@ -110,9 +112,13 @@ namespace OAT
 			return m_bombs;
 		}
 
-		public void UseBomb()
+		public void UseBomb(Vector3 position)
 		{
+			BombEffect bombEffect = Instantiate<BombEffect>(bombEffectPrefab);
+			bombEffect.transform.position = position;
+
 			--m_bombs;
+			UIController.Instance.UpdateBombs(m_bombs);
 		}
 	}
 }
