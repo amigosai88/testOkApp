@@ -39,6 +39,7 @@ namespace OAT
 
 		public void FinishLevel(bool win)
 		{
+			levelController.ClearActiveUnits();
 			UIController.Instance.FinishLevel(win);
 		}
 	}

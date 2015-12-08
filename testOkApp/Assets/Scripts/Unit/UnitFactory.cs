@@ -12,10 +12,9 @@ namespace OAT
 			get { return m_instance; }
 		}
 
+		public Material[] unitMaterials;
 		public UnitModel unitModelPrefab;
 		List<UnitModel> objectsPool = new List<UnitModel>();
-
-		const float HALF_SCR_WIDTH = 5f;
 
 		void Awake()
 		{
@@ -30,12 +29,15 @@ namespace OAT
 			{
 				unit.unitState = UnitState.Run;
 				unit.gameObject.SetActive(true);
+				unit.unitView.transform.eulerAngles = Vector3.zero;
+				unit.unitController.gameObject.SetActive(true);
 			}
 			else
 			{
 				unit = Instantiate<UnitModel>(unitModelPrefab);
 				unit.unitInfo = info;
 				unit.unitMove = AddMove(unit, info);
+				unit.unitView.meshRenderer.material = unitMaterials[(int)info.m_unitType];
 			}
 			
 			unit.transform.position = GetStartPosition();
@@ -57,7 +59,7 @@ namespace OAT
 
 		Vector3 GetStartPosition()
 		{
-			return new Vector3(Random.Range(-HALF_SCR_WIDTH, HALF_SCR_WIDTH), 0f, 0f);
+			return new Vector3(Random.Range(-WorldRect.Instance.PLAY_FIELD_WIDTH, WorldRect.Instance.PLAY_FIELD_WIDTH), 0f, 0f);
 		}
 
 		public void AddToPool(UnitModel unit)

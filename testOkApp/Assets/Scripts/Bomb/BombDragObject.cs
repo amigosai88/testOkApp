@@ -22,7 +22,7 @@ namespace OAT
 			if(!m_dragStarted)
 				return;
 
-			m_draggedIcon.transform.position = Camera.main.ScreenToWorldPoin(new Vector3(eventData.position.x, eventData.position.y, 0f));
+//			m_draggedIcon.transform.position = Camera.main.ScreenToWorldPoin(new Vector3(eventData.position.x, eventData.position.y, 0f));
 		}
 
 		public void OnEndDrag(PointerEventData eventData)
@@ -32,7 +32,7 @@ namespace OAT
 
 			m_dragStarted = false;
 			m_draggedIcon.gameObject.SetActive(false);
-			GameController.Instance.levelController.UseBomb();
+			GameController.Instance.levelController.UseBomb(eventData.position);
 		}
 	}
 }

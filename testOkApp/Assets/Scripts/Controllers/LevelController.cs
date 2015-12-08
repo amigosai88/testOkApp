@@ -29,10 +29,9 @@ namespace OAT
 			m_bombs = GameConfig.BOMBS_COUNT;
 
 			UIController.Instance.UpdateLives(m_lives);
-			ClearActiveUnits();
 		}
 
-		void ClearActiveUnits()
+		public void ClearActiveUnits()
 		{
 			foreach(UnitModel unit in activeUnits)
 				Destroy(unit.gameObject);

@@ -7,6 +7,7 @@ namespace OAT
 	public class UnitView : MonoBehaviour 
 	{
 		public UnitModel unitModel;
+		public MeshRenderer meshRenderer;
 
 		// temp
 		public void KillUnit()

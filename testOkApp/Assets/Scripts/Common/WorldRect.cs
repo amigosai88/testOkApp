@@ -12,13 +12,12 @@ namespace OAT
 			get { return m_instance; }
 		}
 			
-		public Transform plain;
 		public float PLAY_FIELD_WIDTH;
 
 		void Awake()
 		{
 			m_instance = this;
-			PLAY_FIELD_WIDTH = plain.localScale.x;
+			PLAY_FIELD_WIDTH = transform.localScale.x;
 		}
 	}
 }

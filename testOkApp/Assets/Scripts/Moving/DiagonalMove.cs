@@ -30,7 +30,9 @@ namespace OAT
 				}
 				
 				CheckBounds();
-				transform.postion = new Vector3(transform.postion.x + GameConfig.DIAGONAL_MOVING_SPEED * m_movingSign);
+				transform.position = new Vector3(transform.position.x + GameConfig.DIAGONAL_MOVING_SPEED * m_movingSign,
+				                                 transform.position.y,
+				                                 transform.position.z);
 			}
 			else
 			{
@@ -51,8 +53,8 @@ namespace OAT
 
 		void CheckBounds()
 		{
-			if(transform.postion.x + GameConfig.DIAGONAL_MOVING_SPEED * m_movingSign > WorldRect.Instance.PLAY_FIELD_WIDTH/2f ||
-			   transform.postion.x + GameConfig.DIAGONAL_MOVING_SPEED * m_movingSign < -WorldRect.Instance.PLAY_FIELD_WIDTH/2f)
+			if(transform.position.x + GameConfig.DIAGONAL_MOVING_SPEED * m_movingSign > WorldRect.Instance.PLAY_FIELD_WIDTH ||
+			   transform.position.x + GameConfig.DIAGONAL_MOVING_SPEED * m_movingSign < -WorldRect.Instance.PLAY_FIELD_WIDTH)
 				m_movingSign *= -1;
 		}
 	}
