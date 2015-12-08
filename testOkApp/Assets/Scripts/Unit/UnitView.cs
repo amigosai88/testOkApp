@@ -8,11 +8,12 @@ namespace OAT
 	{
 		public UnitModel unitModel;
 		public MeshRenderer meshRenderer;
+		public GameObject deathEffectPrefab;
 
-		// temp
 		public void KillUnit()
 		{
-			transform.Rotate(20f, 30f, 40f);
+			Instantiate(deathEffectPrefab).transform.position = transform.position;
+			gameObject.SetActive(false);
 		}
 	}
 }

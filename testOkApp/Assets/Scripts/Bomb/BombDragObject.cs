@@ -12,6 +12,8 @@ namespace OAT
 
 		public void OnBeginDrag(PointerEventData eventData)
 		{
+			if(GameController.Instance.levelController.GetBombsCount() < 1)
+				return;
 
 			m_dragStarted = true;
 			m_draggedIcon.gameObject.SetActive(true);
@@ -22,12 +24,19 @@ namespace OAT
 			if(!m_dragStarted)
 				return;
 
-//			m_draggedIcon.transform.position = Camera.main.ScreenToWorldPoin(new Vector3(eventData.position.x, eventData.position.y, 0f));
+			if(GameController.IsPaused)
+			{
+				m_dragStarted = false;
+				m_draggedIcon.gameObject.SetActive(false);
+				return;
+			}
+
+			m_draggedIcon.transform.position = new Vector3(eventData.position.x, eventData.position.y, 0f);
 		}
 
 		public void OnEndDrag(PointerEventData eventData)
 		{
-			if(!m_dragStarted)
+			if(!m_dragStarted || GameController.IsPaused)
 				return;
 
 			m_dragStarted = false;

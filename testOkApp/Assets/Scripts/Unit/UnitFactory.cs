@@ -29,7 +29,7 @@ namespace OAT
 			{
 				unit.unitState = UnitState.Run;
 				unit.gameObject.SetActive(true);
-				unit.unitView.transform.eulerAngles = Vector3.zero;
+				unit.unitView.gameObject.SetActive(true);
 				unit.unitController.gameObject.SetActive(true);
 			}
 			else

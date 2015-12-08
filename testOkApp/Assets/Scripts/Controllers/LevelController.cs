@@ -8,7 +8,6 @@ namespace OAT
 	{
 		float m_timeToEnd;
 		float m_timeToGeneration;
-		float m_cachedGenerationTime;
 		int m_lives;
 		int m_scores;
 		int m_bombs;
@@ -22,13 +21,13 @@ namespace OAT
 		{
 			m_timeToEnd = GameConfig.LEVEL_TIME_SECONDS;
 			m_lives = GameConfig.PLAYER_LIVES;
-			m_cachedGenerationTime = GameConfig.GENERATION_RATE;
-			m_timeToGeneration = m_cachedGenerationTime;
+			m_timeToGeneration = GenerationTime();
 			m_scores = 0;
 			m_sessionStarted = true;
 			m_bombs = GameConfig.BOMBS_COUNT;
 
 			UIController.Instance.UpdateLives(m_lives);
+			UIController.Instance.UpdateBombs(m_bombs);
 		}
 
 		public void ClearActiveUnits()
@@ -52,7 +51,7 @@ namespace OAT
 
 		void Update()
 		{
-			if(!m_sessionStarted)
+			if(!m_sessionStarted || GameController.IsPaused)
 				return;
 
 			TryGenerateUnity();
@@ -62,12 +61,17 @@ namespace OAT
 				EndLevel();
 		}
 
+		float GenerationTime()
+		{
+			return Random.Range(GameConfig.GENERATION_RATE_MIN, GameConfig.GENERATION_RATE_MAX);
+		}
+
 		void TryGenerateUnity()
 		{
 			m_timeToGeneration -= Time.deltaTime;
 			if(m_timeToGeneration <= 0f)
 			{
-				m_timeToGeneration = m_cachedGenerationTime;
+				m_timeToGeneration = GenerationTime();
 				UnitType type = GetTypeByChance();
 				UnitInfo info = new UnitInfo(type);
 				UnitModel unit = UnitFactory.Instance.GenerateUnit(info);
