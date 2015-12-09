@@ -41,7 +41,15 @@ namespace OAT
 
 			m_dragStarted = false;
 			m_draggedIcon.gameObject.SetActive(false);
-			GameController.Instance.levelController.UseBomb(eventData.position);
+
+			RaycastHit hit;
+			Ray ray = Camera.main.ScreenPointToRay(eventData.position);
+			
+			if(Physics.Raycast(ray, out hit)) 
+			{
+				Vector3 dropPosition = new Vector3(hit.point.x, 0f, hit.point.z);
+				GameController.Instance.levelController.UseBomb(dropPosition);
+			}
 		}
 	}
 }

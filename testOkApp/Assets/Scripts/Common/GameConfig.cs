@@ -20,8 +20,8 @@ namespace OAT
 		public static float DIAGONAL_MOVING_RATE = 1.5f;
 		public static float DIAGONAL_MOVING_SPEED = 0.05f;
 
-		public static float BOMB_SPEED = 0.08f;
-		public static float BOMB_RADIUS = 3f;
+		public static float BOMB_SPEED = 0.25f;
+		public static float BOMB_RADIUS = 4f;
 		public static int BOMBS_COUNT = 3;
 	}
 }

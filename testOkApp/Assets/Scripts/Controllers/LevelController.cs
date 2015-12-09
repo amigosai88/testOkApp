@@ -16,7 +16,6 @@ namespace OAT
 		List<UnitModel> activeUnits = new List<UnitModel>();
 		public BombEffect bombEffectPrefab;
 
-
 		void ResetLevel()
 		{
 			m_timeToEnd = GameConfig.LEVEL_TIME_SECONDS;
